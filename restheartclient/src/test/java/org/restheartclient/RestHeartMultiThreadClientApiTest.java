@@ -3,8 +3,9 @@ package org.restheartclient;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.restheartclient.connection.HttpClientPoolingFactory;
 import org.restheartclient.connection.HttpConnectionUtils;
 
@@ -17,13 +18,13 @@ public class RestHeartMultiThreadClientApiTest {
 
     private static RestHeartClientApi api;
 
-    @BeforeClass
+    @BeforeAll
     public static void initTest() {
         HttpConnectionUtils httpConnectionUtils = new HttpConnectionUtils(new HttpClientPoolingFactory());
         api = new RestHeartClientApi(httpConnectionUtils);
     }
 
-    @AfterClass
+    @AfterAll
     public static void releaseTestResources() {
         if (api != null) {
             try {

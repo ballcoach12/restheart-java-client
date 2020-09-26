@@ -43,9 +43,9 @@ public class RestHeartClientResponse {
         return getHeaderByName(ETAG_LABEL);
     }
 
-    public String getDocumentUrlLocation() {
-        return getHeaderByName(LOCATION_LABEL);
-    }
+//    public String getDocumentUrlLocation() {
+//        return getHeaderByName(LOCATION_LABEL);
+//    }
 
     public String getHeaderByName(String headerName) {
         String value = null;

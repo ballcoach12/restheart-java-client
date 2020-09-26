@@ -8,4 +8,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
  */
 public interface IHttpClientFactory extends Closeable {
     CloseableHttpClient getHttpClient();
+    
+    
 }

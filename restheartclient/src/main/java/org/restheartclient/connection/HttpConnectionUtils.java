@@ -27,10 +27,30 @@ public class HttpConnectionUtils implements IHttpConnectionsUtil, Closeable {
     public HttpConnectionUtils() {
         this.httpClientFactory = new HttpClientBasicFactory();
     }
+    
+    public HttpConnectionUtils(String userName, String password) {
+    	this.httpClientFactory = new HttpClientBasicFactory(userName, password);
+    }
 
     public HttpConnectionUtils(IHttpClientFactory httpClientFactory) {
         this.httpClientFactory = httpClientFactory;
     }
+    
+    /**
+     * CredentialsProvider provider = new BasicCredentialsProvider();
+UsernamePasswordCredentials credentials
+ = new UsernamePasswordCredentials("user1", "user1Pass");
+provider.setCredentials(AuthScope.ANY, credentials);
+ 
+HttpClient client = HttpClientBuilder.create()
+  .setDefaultCredentialsProvider(provider)
+  .build();
+ 
+HttpResponse response = client.execute(
+  new HttpGet(URL_SECURED_BY_BASIC_AUTHENTICATION));
+int statusCode = response.getStatusLine()
+  .getStatusCode();
+     */
 
     @Override
     public <REQ> CloseableHttpResponse sendHttpPost(String url, REQ request) {

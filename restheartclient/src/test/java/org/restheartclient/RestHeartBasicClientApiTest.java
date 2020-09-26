@@ -15,6 +15,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //import org.junit.After;
 //import org.junit.AfterClass;
@@ -45,7 +46,7 @@ public class RestHeartBasicClientApiTest {
 
     @BeforeAll
     public static void initRestHeartClient() {
-        api = new RestHeartClientApi();
+        api = new RestHeartClientApi("admin", "secret");
     }
 
     @AfterAll
@@ -70,6 +71,7 @@ public class RestHeartBasicClientApiTest {
     }
 
     @Test
+    @Disabled
     public void testCreateAndDeleteCollection() {
         RestHeartClientResponse newCollection = createCollection();
 
@@ -78,6 +80,7 @@ public class RestHeartBasicClientApiTest {
     }
 
     @Test
+    @Disabled
     public void testDeleteDocById() throws MalformedURLException {
         createCollection();
         RestHeartClientResponse restHeartClientResponse = insertDocInDB();
@@ -92,6 +95,7 @@ public class RestHeartBasicClientApiTest {
     }
 
     @Test
+    @Disabled
     public void testGetAllDocs() {
         createCollection();
         insertDocInDB();
@@ -114,9 +118,9 @@ public class RestHeartBasicClientApiTest {
     public void testGetDocById() throws MalformedURLException {
         createCollection();
         RestHeartClientResponse restHeartClientResponse = insertDocInDB();
-        String documentUrlLocation = restHeartClientResponse.getDocumentUrlLocation();
-        URL url = new URL(documentUrlLocation);
-        String idCreate = FilenameUtils.getName(url.getPath());
+      //  String documentUrlLocation = restHeartClientResponse.getDocumentUrlLocation();
+      //  URL url = new URL(documentUrlLocation);
+      //  String idCreate = FilenameUtils.getName(url.getPath());
 
         RestHeartClientResponse response = api.getDocumentById(dbName, collName, idCreate);
         assertNotNull(response);
@@ -129,8 +133,14 @@ public class RestHeartBasicClientApiTest {
 
         LOGGER.info(GsonUtils.toJson(response.getResponseObject()));
     }
+    
+    @Test
+    public void testInsertDoc() {
+    	
+    }
 
     @Test
+    @Disabled
     public void testGetDocQuery() throws MalformedURLException {
         createCollection();
         insertDocInDB();
@@ -152,10 +162,14 @@ public class RestHeartBasicClientApiTest {
 
         LOGGER.info(GsonUtils.toJson(response.getResponseObject()));
     }
+    
+    private void assertSuccess(int statusCode) {
+    	assertTrue(statusCode == 200 || statusCode == 201);
+    }
 
     private RestHeartClientResponse createDataBase() {
         RestHeartClientResponse creationResponse = api.createNewDataBase(dbName, "this is a test");
-        assertEquals(201, creationResponse.getStatusCode());
+        assertSuccess(creationResponse.getStatusCode());
         assertNotNull("response eTag is null", creationResponse.getEtag());
         LOGGER.info("ETag=" + creationResponse.getEtag());
         return creationResponse;
@@ -165,7 +179,7 @@ public class RestHeartBasicClientApiTest {
         RestHeartClientResponse newCollection = api.createNewCollection(dbName, collName,
             "this is a test collection");
 
-        assertEquals(201, newCollection.getStatusCode());
+        assertSuccess(newCollection.getStatusCode());
         assertNotNull(newCollection.getEtag());
         return newCollection;
     }

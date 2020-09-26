@@ -6,7 +6,7 @@ import java.lang.reflect.MalformedParametersException;
  * Created by Alon Eirew on 7/17/2017.
  */
 public class MongoURLBuilder {
-    private String baseURL;
+    private String baseURL = "http://127.0.0.1:8080";
     private String databaseName;
     private String collectionName;
     private String documentId;

@@ -67,7 +67,7 @@ public class RestHeartBasicClientApiTest {
 
     @AfterEach
     public void afterTest() {
-        dropDataBase(creationResponseDB);
+     //   dropDataBase(creationResponseDB);
     }
 
     @Test
@@ -118,9 +118,13 @@ public class RestHeartBasicClientApiTest {
     public void testGetDocById() throws MalformedURLException {
         createCollection();
         RestHeartClientResponse restHeartClientResponse = insertDocInDB();
-      //  String documentUrlLocation = restHeartClientResponse.getDocumentUrlLocation();
-      //  URL url = new URL(documentUrlLocation);
-      //  String idCreate = FilenameUtils.getName(url.getPath());
+//        String documentUrlLocation = restHeartClientResponse.getDocumentUrlLocation();
+//        URL url = new URL(documentUrlLocation);
+//        String idCreate = FilenameUtils.getName(url.getPath());
+        String idCreate = restHeartClientResponse.getHeaderByName("Etag");
+        System.out.println("idCreate = " + idCreate);
+         
+        assertNotNull(idCreate);
 
         RestHeartClientResponse response = api.getDocumentById(dbName, collName, idCreate);
         assertNotNull(response);
@@ -128,7 +132,8 @@ public class RestHeartBasicClientApiTest {
         JsonObject responseObject = response.getResponseObject();
         assertNotNull(responseObject);
 
-        String idRes = responseObject.get("_id").getAsJsonObject().get("$oid").getAsString();
+        String idRes = responseObject.get("_etag").getAsJsonObject().get("$oid").getAsString();
+        System.out.println("idRes = " + idRes);
         assertEquals( idCreate, idRes);
 
         LOGGER.info(GsonUtils.toJson(response.getResponseObject()));

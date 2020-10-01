@@ -10,7 +10,7 @@ import org.apache.http.StatusLine;
 public class RestHeartClientResponse {
 
     private static final String ETAG_LABEL = "ETag";
-    private static final String LOCATION_LABEL = "Location";
+    private static final String LOCATION_LABEL = "Links";
 
     private final StatusLine statusLine;
     private final JsonObject responseObject;
@@ -43,9 +43,9 @@ public class RestHeartClientResponse {
         return getHeaderByName(ETAG_LABEL);
     }
 
-//    public String getDocumentUrlLocation() {
-//        return getHeaderByName(LOCATION_LABEL);
-//    }
+    public String getDocumentUrlLocation() {
+        return getHeaderByName(LOCATION_LABEL);
+    }
 
     public String getHeaderByName(String headerName) {
         String value = null;

@@ -197,33 +197,62 @@ public class RestHeartClientApi implements Closeable {
 
 		return response;
 	}
+	
+	 /**
+     * @param databaseName Required
+     * @param collectionName Required
+     * @param documentToInsert Required
+     * @return {@link RestHeartClientResponse}
+     */
+    public RestHeartClientResponse insertDocumentInCollection(final String databaseName, final String collectionName,
+        final Object documentToInsert) {
+        RestHeartClientResponse response = null;
+        LOGGER.info("Trying to insert document in collection-" + collectionName + " and DB-" + databaseName);
 
-	/**
-	 * @param databaseName     Required
-	 * @param collectionName   Required
-	 * @param documentToInsert Required
-	 * @return {@link RestHeartClientResponse}
-	 */
-	public RestHeartClientResponse insertDocumentInCollection(final String databaseName, final String collectionName, final String documentId,
-			final Object documentToInsert) {
-		RestHeartClientResponse response = null;
-		LOGGER.info("Trying to insert document in collection-" + collectionName + " and DB-" + databaseName);
+        MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
+        String url = mongoURLBuilder
+            .setBaseURL(this.mongoUrl)
+            .setDatabaseName(databaseName)
+            .setCollectionName(collectionName)
+            .build();
+LOGGER.info("Sending PUT to url - " + url );
+        try (CloseableHttpResponse httpResponse = this.httpConnectionUtils.sendHttpPut(url, documentToInsert)) {
+            response = extractFromResponse(httpResponse);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Was unable to insert document-"
+                + GsonUtils.toJson(documentToInsert) /*+  " to DB with name-" + databaseName */
+                + " and collection-" + collectionName, e);
+        }
 
-		MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
-		String url = mongoURLBuilder.setBaseURL(this.mongoUrl).setDatabaseName(databaseName)
-				.setCollectionName(collectionName).setDocumentId(documentId).build();
+        return response;
+    }
 
-
-		try(CloseableHttpResponse httpResponse = this.httpConnectionUtils.sendHttpPut(url, documentToInsert)){
-			response = extractFromResponse(httpResponse);
-//			validator.validate(httpResponse);
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Was unable to insert document-" + GsonUtils.toJson(documentToInsert)
-					+ " to DB with name-" + databaseName + " and collection-" + collectionName, e);
-		}
-
-		return response;
-	}
+//	/**
+//	 * @param databaseName     Required
+//	 * @param collectionName   Required
+//	 * @param documentToInsert Required
+//	 * @return {@link RestHeartClientResponse}
+//	 */
+//	public RestHeartClientResponse insertDocumentInCollection(final String databaseName, final String collectionName, 
+//			final Object documentToInsert) {
+//		RestHeartClientResponse response = null;
+//		LOGGER.info("Trying to insert document in collection-" + collectionName + " and DB-" + databaseName);
+//
+//		MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
+//		String url = mongoURLBuilder.setBaseURL(this.mongoUrl).setDatabaseName(databaseName)
+//				.setCollectionName(collectionName).setDocumentId(documentId).build();
+//
+//
+//		try(CloseableHttpResponse httpResponse = this.httpConnectionUtils.sendHttpPut(url, documentToInsert)){
+//			response = extractFromResponse(httpResponse);
+////			validator.validate(httpResponse);
+//		} catch (IOException e) {
+//			LOGGER.log(Level.SEVERE, "Was unable to insert document-" + GsonUtils.toJson(documentToInsert)
+//					+ " to DB with name-" + databaseName + " and collection-" + collectionName, e);
+//		}
+//
+//		return response;
+//	}
 
 	/**
 	 * @param databaseName   Required
@@ -279,25 +308,27 @@ public class RestHeartClientApi implements Closeable {
 	/**
 	 * @param databaseName   Required
 	 * @param collectionName Required
-	 * @param documentId     Required
+	 * @param documentId     Required - the etag of the document that was created when it was inserted
 	 * @return {@link RestHeartClientResponse}
 	 */
 	public RestHeartClientResponse getDocumentById(final String databaseName, final String collectionName,
 			final String documentId) {
 		RestHeartClientResponse restHeartClientResponse = null;
-		LOGGER.info("Trying to get document by id from db-" + databaseName + ", collection-" + collectionName
+		LOGGER.info("Trying to get document by id from collection-" + collectionName
 				+ " and documentId-" + documentId);
 
 		MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
-		String url = mongoURLBuilder.setBaseURL(this.mongoUrl).setDatabaseName(databaseName)
-				.setCollectionName(collectionName).setDocumentId(documentId).build();
+		String url = mongoURLBuilder.setBaseURL(this.mongoUrl)
+				.setDatabaseName(databaseName)
+				.setCollectionName(collectionName)
+				.setDocumentId(documentId)
+				.build();
 
 		try (CloseableHttpResponse httpResponse = this.httpConnectionUtils.sendHttpGet(url)) {
 			restHeartClientResponse = extractFromResponse(httpResponse);
 		//	validator.validate(httpResponse);
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Was unable to delete document from Mongo DB with name-" + databaseName
-					+ ", collection name-" + collectionName + " and document id-" + documentId, e);
+			LOGGER.log(Level.SEVERE, "Was unable to delete document from Mongo DB with collection name-" + collectionName + " and document id-" + documentId, e);
 		}
 
 		return restHeartClientResponse;

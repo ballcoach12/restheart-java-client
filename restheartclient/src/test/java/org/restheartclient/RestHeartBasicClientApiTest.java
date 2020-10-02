@@ -67,11 +67,10 @@ public class RestHeartBasicClientApiTest {
 
     @AfterEach
     public void afterTest() {
-     //   dropDataBase(creationResponseDB);
+        dropDataBase(creationResponseDB);
     }
 
     @Test
-    @Disabled
     public void testCreateAndDeleteCollection() {
         RestHeartClientResponse newCollection = createCollection();
 
@@ -80,22 +79,23 @@ public class RestHeartBasicClientApiTest {
     }
 
     @Test
-    @Disabled
     public void testDeleteDocById() throws MalformedURLException {
         createCollection();
         RestHeartClientResponse restHeartClientResponse = insertDocInDB();
-        String documentUrlLocation = restHeartClientResponse.getDocumentUrlLocation();
-        URL url = new URL(documentUrlLocation);
-        String id = FilenameUtils.getName(url.getPath());
 
-        RestHeartClientResponse deleteDocByIdResponse = api.deleteDocumentById(dbName, collName, id);
+        String idCreate = restHeartClientResponse.getHeaderByName("Etag");
+        System.out.println("idCreate = " + idCreate);
+         
+        assertNotNull(idCreate);
+
+        RestHeartClientResponse deleteDocByIdResponse = api.deleteDocumentById(dbName, collName, idCreate);
         assertEquals(
              204,
             deleteDocByIdResponse.getStatusCode());
     }
 
     @Test
-    @Disabled
+    @Disabled("Currently broken - fix on PPRO-27")
     public void testGetAllDocs() {
         createCollection();
         insertDocInDB();
@@ -118,9 +118,7 @@ public class RestHeartBasicClientApiTest {
     public void testGetDocById() throws MalformedURLException {
         createCollection();
         RestHeartClientResponse restHeartClientResponse = insertDocInDB();
-//        String documentUrlLocation = restHeartClientResponse.getDocumentUrlLocation();
-//        URL url = new URL(documentUrlLocation);
-//        String idCreate = FilenameUtils.getName(url.getPath());
+
         String idCreate = restHeartClientResponse.getHeaderByName("Etag");
         System.out.println("idCreate = " + idCreate);
          
@@ -139,13 +137,13 @@ public class RestHeartBasicClientApiTest {
         LOGGER.info(GsonUtils.toJson(response.getResponseObject()));
     }
     
-    @Test
-    public void testInsertDoc() {
-    	
-    }
+//    @Test
+//    public void testInsertDoc() {
+//    	
+//    }
 
     @Test
-    @Disabled
+   @Disabled("Currently failing - Fix on PPRO-28")
     public void testGetDocQuery() throws MalformedURLException {
         createCollection();
         insertDocInDB();

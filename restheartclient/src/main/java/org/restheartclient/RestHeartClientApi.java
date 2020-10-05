@@ -17,7 +17,8 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.message.BasicHeader;
 import org.restheartclient.connection.HttpConnectionUtils;
-import org.restheartclient.data.RestHeartClientResponse;
+import org.restheartclient.data.RestheartClientResponse;
+import org.restheartclient.data.StorageClientResponse;
 import org.restheartclient.utils.GsonUtils;
 import org.restheartclient.utils.MongoURLBuilder;
 import org.restheartclient.validation.DefaultResponseValidator;
@@ -69,19 +70,19 @@ public class RestHeartClientApi implements Closeable {
 
 	/**
 	 * @param databaseName Required
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse createNewDataBase(final String databaseName) {
+	public StorageClientResponse createNewDataBase(final String databaseName) {
 		return createNewDataBase(databaseName, null);
 	}
 
 	/**
 	 * @param databaseName        Required
 	 * @param databaseDescription Optional
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse createNewDataBase(final String databaseName, final String databaseDescription) {
-		RestHeartClientResponse response = null;
+	public RestheartClientResponse createNewDataBase(final String databaseName, final String databaseDescription) {
+		RestheartClientResponse response = null;
 		LOGGER.info("Trying to create new db-" + databaseName + " with desc-" + databaseDescription);
 
 		JsonObject jo = new JsonObject();
@@ -110,10 +111,10 @@ public class RestHeartClientApi implements Closeable {
 	/**
 	 * @param databaseName Required
 	 * @param databaseETag Required
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse deleteDataBase(final String databaseName, final String databaseETag) {
-		RestHeartClientResponse response = null;
+	public RestheartClientResponse deleteDataBase(final String databaseName, final String databaseETag) {
+		RestheartClientResponse response = null;
 		LOGGER.info("Trying to create new db-" + databaseName);
 
 		MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
@@ -133,9 +134,9 @@ public class RestHeartClientApi implements Closeable {
 	/**
 	 * @param databaseName   Required
 	 * @param collectionName Required
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse createNewCollection(final String databaseName, final String collectionName) {
+	public StorageClientResponse createNewCollection(final String databaseName, final String collectionName) {
 		return createNewCollection(databaseName, collectionName, null);
 	}
 
@@ -143,11 +144,11 @@ public class RestHeartClientApi implements Closeable {
 	 * @param databaseName          Required
 	 * @param collectionName        Required
 	 * @param collectionDescription Optional
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse createNewCollection(final String databaseName, final String collectionName,
+	public RestheartClientResponse createNewCollection(final String databaseName, final String collectionName,
 			final String collectionDescription) {
-		RestHeartClientResponse response = null;
+		RestheartClientResponse response = null;
 		LOGGER.info("Trying to create new collection-" + collectionName + " in DB-" + databaseName + " with desc-"
 				+ collectionDescription);
 
@@ -175,11 +176,11 @@ public class RestHeartClientApi implements Closeable {
 	 * @param databaseName   Required
 	 * @param collectionName Required
 	 * @param collectionETag Required
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse deleteCollection(final String databaseName, final String collectionName,
+	public StorageClientResponse deleteCollection(final String databaseName, final String collectionName,
 			final String collectionETag) {
-		RestHeartClientResponse response = null;
+		StorageClientResponse response = null;
 		LOGGER.info("Trying to create new db-" + databaseName);
 
 		MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
@@ -202,11 +203,11 @@ public class RestHeartClientApi implements Closeable {
      * @param databaseName Required
      * @param collectionName Required
      * @param documentToInsert Required
-     * @return {@link RestHeartClientResponse}
+     * @return {@link RestheartClientResponse}
      */
-    public RestHeartClientResponse insertDocumentInCollection(final String databaseName, final String collectionName,
+    public RestheartClientResponse insertDocumentInCollection(final String databaseName, final String collectionName,
         final Object documentToInsert) {
-        RestHeartClientResponse response = null;
+        RestheartClientResponse response = null;
         LOGGER.info("Trying to insert document in collection-" + collectionName + " and DB-" + databaseName);
 
         MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
@@ -258,11 +259,11 @@ LOGGER.info("Sending PUT to url - " + url );
 	 * @param databaseName   Required
 	 * @param collectionName Required
 	 * @param documentId     Required
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse deleteDocumentById(final String databaseName, final String collectionName,
+	public StorageClientResponse deleteDocumentById(final String databaseName, final String collectionName,
 			final String documentId) {
-		RestHeartClientResponse response = null;
+		StorageClientResponse response = null;
 		LOGGER.info("Trying to create new db-" + databaseName);
 
 		MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
@@ -283,11 +284,11 @@ LOGGER.info("Sending PUT to url - " + url );
 	/**
 	 * @param databaseName   Required
 	 * @param collectionName Required
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse getAllDocumentsFromCollection(final String databaseName,
+	public StorageClientResponse getAllDocumentsFromCollection(final String databaseName,
 			final String collectionName) {
-		RestHeartClientResponse restHeartClientResponse = null;
+		StorageClientResponse restHeartClientResponse = null;
 		LOGGER.info("Trying to get all documents from db-" + databaseName + ", collection-" + collectionName);
 
 		MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
@@ -309,11 +310,11 @@ LOGGER.info("Sending PUT to url - " + url );
 	 * @param databaseName   Required
 	 * @param collectionName Required
 	 * @param documentId     Required - the etag of the document that was created when it was inserted
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse getDocumentById(final String databaseName, final String collectionName,
+	public StorageClientResponse getDocumentById(final String databaseName, final String collectionName,
 			final String documentId) {
-		RestHeartClientResponse restHeartClientResponse = null;
+		StorageClientResponse restHeartClientResponse = null;
 		LOGGER.info("Trying to get document by id from collection-" + collectionName
 				+ " and documentId-" + documentId);
 
@@ -338,10 +339,10 @@ LOGGER.info("Sending PUT to url - " + url );
 	 * @param databaseName   Required
 	 * @param collectionName Required
 	 * @param query          Required
-	 * @return {@link RestHeartClientResponse}
+	 * @return {@link RestheartClientResponse}
 	 */
-	public RestHeartClientResponse getDocumentsQuery(String databaseName, String collectionName, String query) {
-		RestHeartClientResponse restHeartClientResponse = null;
+	public StorageClientResponse getDocumentsQuery(String databaseName, String collectionName, String query) {
+		StorageClientResponse restHeartClientResponse = null;
 		LOGGER.info("Trying to get document with query from db-" + databaseName + ", collection-" + collectionName
 				+ " and query-" + query);
 
@@ -377,8 +378,8 @@ LOGGER.info("Sending PUT to url - " + url );
 		return restHeartClientResponse;
 	}
 
-	private RestHeartClientResponse extractFromResponse(final CloseableHttpResponse httpResponse) {
-		RestHeartClientResponse response = null;
+	private RestheartClientResponse extractFromResponse(final CloseableHttpResponse httpResponse) {
+		RestheartClientResponse response = null;
 		JsonObject responseObj = null;
 		if (httpResponse != null) {
 			StatusLine statusLine = httpResponse.getStatusLine();
@@ -396,7 +397,7 @@ LOGGER.info("Sending PUT to url - " + url );
 				}
 			}
 
-			response = new RestHeartClientResponse(statusLine, allHeaders, responseObj);
+			response = new RestheartClientResponse(statusLine, allHeaders, responseObj);
 		}
 		return response;
 	}

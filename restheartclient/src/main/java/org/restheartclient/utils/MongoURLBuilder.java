@@ -38,15 +38,15 @@ public class MongoURLBuilder {
 
         StringBuilder sb = new StringBuilder();
         sb.append(this.baseURL);
-        if(databaseName != null && !databaseName.isEmpty()) {
-            sb.append("/").append(databaseName);
+       // if(databaseName != null && !databaseName.isEmpty()) {
+       //     sb.append("/").append(databaseName);
             if(collectionName != null && !collectionName.isEmpty()) {
                 sb.append("/").append(collectionName);
                 if(documentId != null && !documentId.isEmpty()) {
                     sb.append("/").append(documentId);
                 }
             }
-        }
+       // }
 
         return sb.toString();
     }

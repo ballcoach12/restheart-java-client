@@ -10,7 +10,7 @@ import java.util.logging.Level;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.restheartclient.connection.HttpConnectionUtils;
-import org.restheartclient.data.RestHeartClientResponse;
+import org.restheartclient.data.StorageClientResponse;
 import org.restheartclient.exceptions.ApiException;
 import org.restheartclient.exceptions.InvalidOperationException;
 import org.restheartclient.exceptions.UnauthorizedAccessException;
@@ -34,8 +34,8 @@ public class RestHeartClient {
 		this.httpConnectionUtils = new HttpConnectionUtils(userName, password);
 	}
 
-	public RestHeartClientResponse createDatabase(String dbName, String dbDescription) throws UnauthorizedAccessException, UnknownResourceException, InvalidOperationException, ApiException {
-		RestHeartClientResponse response = null;
+	public StorageClientResponse createDatabase(String dbName, String dbDescription) throws UnauthorizedAccessException, UnknownResourceException, InvalidOperationException, ApiException {
+		StorageClientResponse response = null;
 		JsonObject jo = new JsonObject();
 		jo.addProperty(DB_DESCRIPTION_PROPERTY_NAME, dbDescription);
 		MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
@@ -51,9 +51,9 @@ public class RestHeartClient {
 		return response;
 	}
 
-	public RestHeartClientResponse createCollection(String name) throws UnauthorizedAccessException, UnknownResourceException, InvalidOperationException, ApiException
+	public StorageClientResponse createCollection(String name) throws UnauthorizedAccessException, UnknownResourceException, InvalidOperationException, ApiException
 			 {
-		RestHeartClientResponse response = null;
+		StorageClientResponse response = null;
 		JsonObject jo = new JsonObject();
 		MongoURLBuilder mongoURLBuilder = new MongoURLBuilder();
 		String url = mongoURLBuilder.setBaseURL(this.mongoUrl).setCollectionName(name).build();

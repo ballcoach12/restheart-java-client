@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.greglusk.restheart.ValueWrapper;
 
 public class SerializationTests {
 	
@@ -87,7 +88,7 @@ public class SerializationTests {
 		
 		ValueWrapper result = gson.fromJson(json, ValueWrapper.class);
 		assertNotNull(result);
-		Item resultItem = gson.fromJson(result.value.toString(), Item.class);
+		Item resultItem = gson.fromJson(result.getValue().toString(), Item.class);
 		assertEquals(item.qty, resultItem.qty);
 		assertEquals(item.size.h, resultItem.size.h);
 		assertEquals(item.item, resultItem.item);

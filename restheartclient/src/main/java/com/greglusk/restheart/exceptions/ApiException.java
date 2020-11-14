@@ -1,4 +1,4 @@
-package org.restheartclient.exceptions;
+package com.greglusk.restheart.exceptions;
 
 /**
  * A generic exception that is thrown as a last resort.

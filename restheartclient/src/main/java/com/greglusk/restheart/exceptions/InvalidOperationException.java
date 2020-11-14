@@ -1,4 +1,4 @@
-package org.restheartclient.exceptions;
+package com.greglusk.restheart.exceptions;
 
 /**
  * An exception that is thrown when a method is called that is unsupported.

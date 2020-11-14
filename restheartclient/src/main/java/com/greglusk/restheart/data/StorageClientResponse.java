@@ -1,4 +1,4 @@
-package org.restheartclient.data;
+package com.greglusk.restheart.data;
 
 import org.apache.http.Header;
 import org.apache.http.StatusLine;

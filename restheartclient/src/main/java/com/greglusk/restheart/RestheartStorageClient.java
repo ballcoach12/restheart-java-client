@@ -1,4 +1,8 @@
-package org.restheartclient;
+/**
+* Copyright 2020, Gregory A. Lusk
+* Chattanooga, Tennessee USA
+*/
+package com.greglusk.restheart;
 
 import static com.greglusk.utils.checks.Checks.ensure;
 import static com.greglusk.utils.checks.Checks.invariant;
@@ -17,15 +21,15 @@ import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.message.BasicHeader;
-import org.restheartclient.connection.HttpConnectionUtils;
-import org.restheartclient.data.RestheartClientResponse;
-import org.restheartclient.utils.MongoURLBuilder;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.greglusk.restheart.connection.HttpConnectionUtils;
+import com.greglusk.restheart.data.RestheartClientResponse;
+import com.greglusk.restheart.utils.MongoURLBuilder;
 
 import lombok.SneakyThrows;
 

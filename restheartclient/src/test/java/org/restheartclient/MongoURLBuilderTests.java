@@ -7,7 +7,8 @@ package org.restheartclient;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import org.restheartclient.utils.MongoURLBuilder;
+
+import com.greglusk.restheart.utils.MongoURLBuilder;
 
 public class MongoURLBuilderTests {
 

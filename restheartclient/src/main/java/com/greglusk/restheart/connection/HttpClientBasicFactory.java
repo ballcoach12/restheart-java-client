@@ -1,4 +1,4 @@
-package org.restheartclient.connection;
+package com.greglusk.restheart.connection;
 
 import java.io.Closeable;
 import java.io.IOException;

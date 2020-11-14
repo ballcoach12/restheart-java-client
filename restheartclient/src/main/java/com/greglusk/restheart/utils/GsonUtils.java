@@ -1,4 +1,4 @@
-package org.restheartclient.utils;
+package com.greglusk.restheart.utils;
 
 import com.google.gson.Gson;
 

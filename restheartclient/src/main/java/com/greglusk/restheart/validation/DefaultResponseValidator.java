@@ -1,4 +1,4 @@
-package org.restheartclient.validation;
+package com.greglusk.restheart.validation;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -9,15 +9,15 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.restheartclient.data.RestheartClientResponse;
-import org.restheartclient.data.StorageClientResponse;
-import org.restheartclient.exceptions.ApiException;
-import org.restheartclient.exceptions.InvalidOperationException;
-import org.restheartclient.exceptions.UnauthorizedAccessException;
-import org.restheartclient.exceptions.UnknownResourceException;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.greglusk.restheart.data.RestheartClientResponse;
+import com.greglusk.restheart.data.StorageClientResponse;
+import com.greglusk.restheart.exceptions.ApiException;
+import com.greglusk.restheart.exceptions.InvalidOperationException;
+import com.greglusk.restheart.exceptions.UnauthorizedAccessException;
+import com.greglusk.restheart.exceptions.UnknownResourceException;
 
 public class DefaultResponseValidator implements ResponseValidator {
 

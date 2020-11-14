@@ -1,4 +1,4 @@
-package org.restheartclient.exceptions;
+package com.greglusk.restheart.exceptions;
 
 public class UnknownResourceException extends Exception {
 

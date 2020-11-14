@@ -1,4 +1,4 @@
-package org.restheartclient.data;
+package com.greglusk.restheart.data;
 
 import com.google.gson.JsonElement;
 //import com.google.gson.JsonObject;

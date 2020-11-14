@@ -1,14 +1,16 @@
-package org.restheartclient;
+/**
+* Copyright 2020, Gregory A. Lusk
+* Chattanooga, Tennessee USA
+*/
+
+package com.greglusk.restheart;
 
 import java.util.List;
-
-import org.restheartclient.data.RestheartClientResponse;
-import org.restheartclient.data.StorageClientResponse;
 
 /** The interface for the Restheart API Client
 /*  Works with v5 only
 */
-interface StorageClient
+public interface StorageClient
 {
 	/** PUT http://localhost:8080/name 
 	*   no JSON body 

@@ -1,4 +1,4 @@
-package org.restheartclient;
+package com.greglusk.restheart;
 
 import com.google.gson.Gson;
 import java.util.UUID;

@@ -15,6 +15,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import com.greglusk.restheart.RestheartStorageClient;
+import com.greglusk.restheart.StorageClient;
+import com.greglusk.restheart.ValueWrapper;
 import com.greglusk.utils.checks.PreConditionViolationException;
 
 public class StorageClientTests {
@@ -147,7 +150,7 @@ public class StorageClientTests {
 
 		ValueWrapper response = client.getValue(COLLECTION_NAME, "a");
 		assertNotNull(response);
-		assertEquals("a", response._id);
+		assertEquals("a", response.getId());
 	}
 
 	@Test
@@ -172,7 +175,7 @@ public class StorageClientTests {
 		}
 		ValueWrapper response = client.getValue(COLLECTION_NAME, "a");
 		assertNotNull(response);
-		assertEquals("a", response._id);
+		assertEquals("a", response.getId());
 		
 		try {
 			client.deleteValue(COLLECTION_NAME, "a");
@@ -182,7 +185,7 @@ public class StorageClientTests {
 			fail(e);
 		}
 		
-		assertNull(client.getValue(COLLECTION_NAME, "a").value);
+		assertNull(client.getValue(COLLECTION_NAME, "a").getValue());
 	}
 
 	@Test
@@ -209,8 +212,8 @@ public class StorageClientTests {
 	
 	private void insertValue() {
 		ValueWrapper wrapper = new ValueWrapper();
-		wrapper.value = new Item();
-		wrapper._id = "a";
+		wrapper.setValue(new Item());
+		wrapper.setId("a");
 		client.insertValue(COLLECTION_NAME, wrapper);
 	}
 

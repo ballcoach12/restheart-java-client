@@ -1,4 +1,4 @@
-package org.restheartclient.connection;
+package com.greglusk.restheart.connection;
 
 import java.io.Closeable;
 import org.apache.http.impl.client.CloseableHttpClient;
